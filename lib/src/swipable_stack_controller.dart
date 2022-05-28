@@ -40,12 +40,14 @@ class SwipableStackController extends ChangeNotifier {
 
   void _initializeSessions() {
     _currentSessionState = null;
-    _previousSession = null;
+    _previousSessions.clear();
     notifyListeners();
   }
 
   void _completeAction() {
-    _previousSession = currentSession?.copyWith();
+    if (currentSession != null) {
+      _previousSessions.add(currentSession!);
+    }
     _currentIndex += 1;
     _currentSessionState = null;
     notifyListeners();
@@ -57,15 +59,16 @@ class SwipableStackController extends ChangeNotifier {
   }
 
   void _prepareRewind() {
-    _currentSessionState = _previousSession?.copyWith();
+    _currentSessionState = _previousSessions.removeFirst();
     _currentIndex -= 1;
     notifyListeners();
   }
 
-  _SwipableStackPosition? _previousSession;
+  final Queue<_SwipableStackPosition> _previousSessions =
+    Queue<_SwipableStackPosition>();
 
   /// Whether to rewind.
-  bool get canRewind => _previousSession != null && _currentIndex > 0;
+  bool get canRewind => _previousSessions.isNotEmpty && _currentIndex > 0;
 
   /// Advance to the next card with specified [swipeDirection].
   ///
