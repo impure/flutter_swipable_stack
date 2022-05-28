@@ -814,18 +814,12 @@ class _SwipablePositioned extends StatelessWidget {
   Offset _preferredPosition(BuildContext context) {
     if (_isFirst) {
       return _currentPositionDiff;
-    } else if (_isSecond) {
+    } else {
       final constraintsDiff =
-          areaConstraints * (1 - _animationProgress()) * _animationRate / 2;
+          areaConstraints * (index - _animationProgress()) * _animationRate / 2;
       return Offset(
         constraintsDiff.maxWidth,
         constraintsDiff.maxHeight,
-      );
-    } else {
-      final maxDiff = areaConstraints * _animationRate / 2;
-      return Offset(
-        maxDiff.maxWidth,
-        maxDiff.maxHeight,
       );
     }
   }
