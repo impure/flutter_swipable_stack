@@ -13,8 +13,6 @@ part 'model/swipable_stack_position.dart';
 part 'model/swipe_rate_per_threshold.dart';
 part 'swipable_stack_controller.dart';
 
-const _kStackMaxCount = 3;
-
 /// A widget for stacking cards, which users can swipe horizontally and
 /// vertically with beautiful animations.
 class SwipableStack extends StatefulWidget {
@@ -32,6 +30,7 @@ class SwipableStack extends StatefulWidget {
     this.stackClipBehaviour = _defaultStackClipBehaviour,
     this.detectableSwipeDirections = _defaultDetectableSwipeDirections,
     this.allowVerticalSwipe = true,
+    this.maxItemsToDisplay = 3,
     Curve? cancelAnimationCurve,
     Curve? rewindAnimationCurve,
     this.swipeAnchor,
@@ -65,8 +64,11 @@ class SwipableStack extends StatefulWidget {
   /// Builder for displaying an overlay on the most foreground card.
   final SwipableStackOverlayBuilder? overlayBuilder;
 
-  /// The count of items to display.
+  /// The total number of items.
   final int? itemCount;
+  
+  /// The maximum number of items to display.
+  final int maxItemsToDisplay;
 
   /// The second child size rate.
   final double viewFraction;
@@ -411,10 +413,10 @@ class _SwipableStackState extends State<SwipableStack>
     final stackCount = () {
       final itemCount = widget.itemCount;
       if (itemCount == null) {
-        return _kStackMaxCount;
+        return widget.maxItemsToDisplay;
       }
       final remainingCount = itemCount - _currentIndex;
-      return math.min(remainingCount, _kStackMaxCount);
+      return math.min(remainingCount, widget.maxItemsToDisplay);
     }();
     if (stackCount <= 0) {
       return [];
