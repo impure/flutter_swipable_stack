@@ -806,11 +806,8 @@ class _SwipablePositioned extends StatelessWidget {
   BoxConstraints _constraints(BuildContext context) {
     if (_isFirst) {
       return areaConstraints;
-    } else if (_isSecond) {
-      return areaConstraints *
-          (1 - _animationRate + _animationRate * _animationProgress());
     } else {
-      return areaConstraints * (1 - _animationRate);
+      return areaConstraints * (1 - (index - _animationProgress()) * _animationRate);
     }
   }
 
