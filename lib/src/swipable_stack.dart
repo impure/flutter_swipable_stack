@@ -561,12 +561,12 @@ class _SwipableStackState extends State<SwipableStack>
     _rewindAnimationController.forward(from: 0).then(
       (_) {
         rewindAnimation.removeListener(_animate);
-        widget.controller._initializeSessions();
+        widget.controller._completeRewind();
         widget.controller._previousSessions.removeFirst();
       },
     ).catchError((dynamic c) {
       rewindAnimation.removeListener(_animate);
-      widget.controller._initializeSessions();
+      widget.controller._completeRewind();
     });
   }
 

@@ -38,9 +38,9 @@ class SwipableStackController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _initializeSessions() {
+  void _completeRewind() {
     _currentSessionState = null;
-    _previousSessions.clear();
+    _previousSessions.removeFirst();
     notifyListeners();
   }
 
