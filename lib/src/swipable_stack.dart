@@ -562,7 +562,6 @@ class _SwipableStackState extends State<SwipableStack>
       (_) {
         rewindAnimation.removeListener(_animate);
         widget.controller._completeRewind();
-        widget.controller._previousSessions.removeFirst();
       },
     ).catchError((dynamic c) {
       rewindAnimation.removeListener(_animate);
