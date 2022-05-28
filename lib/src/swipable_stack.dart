@@ -469,11 +469,11 @@ class _SwipableStackState extends State<SwipableStack>
           swipeProgress: swipeDirectionRate?.rate ?? 0.0,
         ),
       );
-      if (widget.controller._currentSessionState != null) {
+      if (widget.controller._previousSessions.isNotEmpty) {
         cards.add(
           _SwipablePositioned(
             key: child.key ?? ValueKey(rewindTargetIndex),
-            session: widget.controller._currentSessionState!,
+            session: widget.controller._previousSessions.first,
             index: -1,
             viewFraction: widget.viewFraction,
             swipeAnchor: widget.swipeAnchor,
@@ -543,14 +543,14 @@ class _SwipableStackState extends State<SwipableStack>
     if (!canAnimationStart) {
       return;
     }
-    if (widget.controller._currentSessionState == null) {
+    if (widget.controller._previousSessions.isEmpty) {
       return;
     }
     widget.controller._prepareRewind();
     _rewindAnimationController.duration = duration;
     final rewindAnimation = _rewindAnimationController.tweenCurvedAnimation(
-      startPosition: widget.controller._currentSessionState!.current,
-      currentPosition: widget.controller._currentSessionState!.current,
+      startPosition: widget.controller._previousSessions.first.start,
+      currentPosition: widget.controller._previousSessions.first.current,
       curve: widget.rewindAnimationCurve,
     );
     void _animate() {
@@ -562,6 +562,7 @@ class _SwipableStackState extends State<SwipableStack>
       (_) {
         rewindAnimation.removeListener(_animate);
         widget.controller._initializeSessions();
+        widget.controller._previousSessions.removeFirst();
       },
     ).catchError((dynamic c) {
       rewindAnimation.removeListener(_animate);
