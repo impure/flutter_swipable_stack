@@ -473,7 +473,7 @@ class _SwipableStackState extends State<SwipableStack>
         cards.add(
           _SwipablePositioned(
             key: child.key ?? ValueKey(rewindTargetIndex),
-            session: widget.controller._previousSessions.first,
+            session: widget.controller._previousSessions.last,
             index: -1,
             viewFraction: widget.viewFraction,
             swipeAnchor: widget.swipeAnchor,
@@ -549,8 +549,8 @@ class _SwipableStackState extends State<SwipableStack>
     widget.controller._prepareRewind();
     _rewindAnimationController.duration = duration;
     final rewindAnimation = _rewindAnimationController.tweenCurvedAnimation(
-      startPosition: widget.controller._previousSessions.first.start,
-      currentPosition: widget.controller._previousSessions.first.current,
+      startPosition: widget.controller._previousSessions.last.start,
+      currentPosition: widget.controller._previousSessions.last.current,
       curve: widget.rewindAnimationCurve,
     );
     void _animate() {
