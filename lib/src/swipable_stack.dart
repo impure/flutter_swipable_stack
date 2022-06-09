@@ -293,7 +293,7 @@ class _SwipableStackState extends State<SwipableStack>
   void didUpdateWidget(covariant SwipableStack oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.itemCount != widget.itemCount) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});
       });
     }
@@ -760,8 +760,6 @@ class _SwipablePositioned extends StatelessWidget {
   bool get _isRewindTarget => index < 0;
 
   bool get _isFirst => index == 0;
-
-  bool get _isSecond => index == 1;
 
   bool get _swipingTop => session.start.dy < areaConstraints.maxHeight / 2;
 
